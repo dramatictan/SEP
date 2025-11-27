@@ -33,5 +33,5 @@
     "stripe": "^6.15.0"
   },
   "devDependencies": {},
-  "description": ""
+  "description": "instr:"
 }
