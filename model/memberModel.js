@@ -601,7 +601,7 @@ var generateRandomNumber = function(digits){
 var emailer = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'islandfurnituresep@gmail.com',
-        pass: 'islandFurniture123'
+        user: 'dummy.gemail.acc@gmail.com',
+        pass: 'ongq zgdt aygz onvk'
     }
 });
