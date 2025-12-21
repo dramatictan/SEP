@@ -17,6 +17,9 @@ app.use(require('./warehouseentityDB.js'));
 app.use(require('./lineitementityDB.js'));
 app.use(require('./storagebinentityDB.js'));
 
+// Showroom
+app.use(require('./showroomCategoryDB.js'));
+
 let middleware = require('./middleware');
 app.get('/api/checkToken', middleware.checkToken, function (req, res) {
     res.send({success: true});
