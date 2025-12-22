@@ -165,7 +165,10 @@ var showroomDB = {
                 }
 
                 const sql = `
-                    SELECT * FROM showroom
+                    SELECT s.*, c.name AS category_name
+                    FROM showroom s
+                    JOIN showroom_category c
+                    ON s.category_id = c.id
                 `;
 
                 conn.query(sql, (err, rows) => {

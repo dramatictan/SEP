@@ -23,10 +23,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
             col.innerHTML = `
                 <div class="showroom-card" data-id="${showroom.id}">
-                    <img src="${showroom.cover_image_url}" alt="${showroom.name}">
+                    <div class="showroom-image">
+                        <img src="${showroom.cover_image_url}" alt="${showroom.name}">
+                        <span class="category-badge">${showroom.category_name}</span>
+                    </div>
+
                     <div class="showroom-card-body">
                         <h4>${showroom.name}</h4>
-                        <p>Description: ${showroom.description}</p>
+                        <p class="description">${showroom.description}</p>
+
+                        <div class="admin-actions">
+                            <button class="btn-edit">
+                                <i class="icon icon-edit"></i>
+                                Edit
+                            </button>
+
+                            <button class="btn-delete">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
             `;

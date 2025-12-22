@@ -25,18 +25,16 @@
 /*------------------------------*/
 /* showroom */
 .showroom-card {
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: 20px;
     background: #fff;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    border: 1px solid #e5e5e5;
+    transition: all 0.2s ease;
 }
 
 .showroom-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .showroom-card img {
@@ -46,14 +44,97 @@
 }
 
 .showroom-card-body {
-    padding: 12px;
+    padding: 16px;
 }
 
 .showroom-card-body h4 {
-    margin: 0 0 6px;
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: #222;
+}
+
+.showroom-card-body .description {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+    margin-bottom: 14px;
 }
 
 .showroom-card-body p {
     font-size: 14px;
     color: #555;
+}
+
+.showroom-image {
+    position: relative;
+}
+
+.showroom-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.category-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #dd1111;
+    color: #fff;
+    font-size: 15px;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+/* admin button */
+.admin-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.admin-actions button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 500;
+
+    border-radius: 8px;
+    border: 1px solid transparent;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-edit {
+    background: #f4f4f4;
+    color: #333;
+    border-color: #ddd;
+}
+
+.btn-edit:hover {
+    background: #eaeaea;
+    border-color: #ccc;
+}
+
+.btn-edit:active {
+    transform: scale(0.96);
+}
+
+.btn-delete {
+    background: #fff5f5;
+    color: #b42318;
+    border-color: #f5c2c7;
+}
+
+.btn-delete:hover {
+    background: #ffe3e3;
+    border-color: #f1aeb5;
+}
+
+.btn-delete:active {
+    transform: scale(0.96);
 }
