@@ -16,17 +16,30 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+
+        // bc multer doesnt work well w json parser, 
+        // removed jsonParser from cont and now using formdata to pass the data
+        const fileInput = document.getElementById("coverImage");
+
+        if (!fileInput.files[0]) {
+            alert("Please select a cover image!");
+            return;
+        }
+
+
+        
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("description", description);
+        formData.append("categoryId", categoryId);
+        formData.append("coverImage", fileInput.files[0]);
+
+
+        console.log(formData)
+
         fetch('/api/addShowroom', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name,
-                description: description,
-                categoryId: categoryId,
-                coverImage: coverImage
-            })
+            body: formData
         })
         .then(res => res.json())
         .then(data => {
