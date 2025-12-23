@@ -3,9 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     fetch('/api/getShowroom', {
         method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + authToken
-        }
     })
     .then(res => res.json())
     .then(data => {

@@ -111,6 +111,21 @@ app.get('/api/getShowroom', function(req, res) {
             });
         });
 })
+ 
+// GET SHOWROOM BY ID
+app.get('/api/getShowroomById/:id', function(req, res) {
+    showroom.getShowroomById(req.params.id)
+        .then((result) => {
+            res.status(200).json(result);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+                success: false,
+                message: `Failed to retrieve showroom ${req.params.id}`
+            });
+        });
+})
 
 
 // DELETE SHOWROOM
