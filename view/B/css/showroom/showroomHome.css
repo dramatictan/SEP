@@ -132,3 +132,23 @@
     background-color: #000;
     color: #fff;
 }
+
+/* Normal card image */
+.image-wrapper {
+    height: 230px;
+}
+
+/* Large card image */
+.large-card .image-wrapper {
+    height: 360px;
+}
+
+.large-card .card-title {
+    font-size: 1.3rem;
+}
+
+.small-desc {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
