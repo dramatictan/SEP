@@ -11,7 +11,6 @@
     filter: brightness(0.6);
 }
 
-/* Optional: overlay captions */
 .carousel-caption {
     top: 0;
     bottom: 0;
@@ -23,5 +22,5 @@
     align-items: center;
     text-align: center;
     color: white;
-    background: rgba(0,0,0,0.3); /* optional overlay */
+    background: rgba(0,0,0,0.3);
 }

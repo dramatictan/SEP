@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const carouselInner = document.querySelector('#showroomCarousel .carousel-inner');
-    const carouselIndicators = document.getElementById('carouselIndicators');
+    const carouselInner = document.querySelector('#hero-carousel .carousel-inner');
+    const carouselIndicators = document.querySelector('#hero-carousel .carousel-indicators');
 
     fetch('/api/showRandomCarousel')
         .then(res => res.json())
@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             data.forEach((item, index) => {
+
                 // Carousel item
                 const activeClass = index === 0 ? 'active' : '';
                 const div = document.createElement('div');
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${item.cover_image_url}" class="d-block w-100" alt="${item.name}" style="height:60vh; object-fit:cover;">
                     <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
                         <h5>${item.name}</h5>
+                        <p>${item.description}</p>
                         <p>${item.category_name}</p>
                     </div>
                 `;
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Carousel indicators
                 const indicator = document.createElement('button');
                 indicator.type = 'button';
-                indicator.setAttribute('data-bs-target', '#showroomCarousel');
+                indicator.setAttribute('data-bs-target', '#hero-carousel');
                 indicator.setAttribute('data-bs-slide-to', index);
                 if (index === 0) indicator.classList.add('active');
                 indicator.setAttribute('aria-current', index === 0 ? 'true' : 'false');
@@ -36,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Initialize carousel manually after items are added
-            new bootstrap.Carousel('#showroomCarousel', {
+            new bootstrap.Carousel('#hero-carousel', {
                 interval: 3000,
                 ride: 'carousel',
                 wrap: true
