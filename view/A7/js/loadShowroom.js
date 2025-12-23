@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+
     fetch('/api/getShowroom', {
         method: 'GET',
         headers: {
@@ -38,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 Edit
                             </button>
 
-                            <button class="btn-delete">
+                            <button class="btn-delete" data-id="${showroom.id}">
                                 <i class="fas fa-trash"></i>
                                 Delete
                             </button>
@@ -55,3 +57,61 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Failed to load showrooms');
     });
 });
+
+
+
+
+// newly added delete and edit, do not remove
+// accept incoming in git merge
+
+// delete showroom
+function del(showroomId){
+    staff = JSON.parse(sessionStorage.getItem("staff"))
+
+    const data = {
+        showroomId: showroomId,
+        staffId: parseInt(staff.id)
+    }
+
+    console.log(data);
+    return fetch(`/api/delShowroom`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(function (response) {
+        window.location.reload();
+    })
+    .then(function (body) {
+        if (body.error) throw new Error(body.error);
+    })
+    .catch(function (error) {
+        console.error(error);
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// assign btns
+document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("btn-delete")) {
+        const id = e.target.dataset.id;
+        del(id);
+    }
+});
+

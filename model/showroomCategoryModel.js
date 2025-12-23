@@ -182,8 +182,67 @@ var showroomDB = {
                 });
             })
         })
-    }
+    },
 
+    // Delete showroom by ID
+    delShowroom: function (details) {
+        return new Promise((resolve, reject) => {
+            const conn = db.getConnection();
+
+            conn.connect((err) => {
+                if (err) {
+                    conn.end();
+                    return reject(err);
+                }
+
+                const checkSql = `
+                    SELECT id FROM staffentity_roleentity WHERE staffs_ID = ? AND roles_ID = 1;
+                `;
+
+                conn.query(checkSql, [details.staffId], (err, rows) => {
+                    if (err) {
+                        conn.end();
+                        return reject(err);
+                    }
+
+                    if (rows.length > 0) {
+                        conn.end();
+                        return reject({ type: 'NOT_AUTHORIZED', staffId: rows[0].staffs_ID });
+                    }
+
+                    const insertSql = `
+                        DELETE FROM showroom WHERE id = ?;
+                    `;
+
+                    conn.query(
+                        insertSql,
+                        [details.showroomId],
+                        (err, result) => {
+                            conn.end();
+                            if (err) {
+                                return reject(err);
+                            }
+                            resolve({
+                                success: true,
+                                data: {
+                                    showroomId: details.showroomId,
+                                    staffId: details.staffId
+                                }
+                            })
+                        }
+                    )
+                    
+
+                    if (result.affectedRows === 0) {
+                        return reject({ type: 'NOT_FOUND', message: 'Showroom not found' });
+                    }
+
+                    
+                })
+            })
+            
+        })
+    },
 }
 
 module.exports = showroomDB;

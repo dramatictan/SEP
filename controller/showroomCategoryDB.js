@@ -63,11 +63,12 @@ app.get('/api/getShowroomCategory',
 );
 
 // ADD SHOWROOM LAYOUT DESIGN
+// integrated multer here
 app.post('/api/addShowroom', uploadImg.single("coverImage"), function(req, res) {
 
     console.log('BODY:', req.body);
     console.log('FILE:', req.file);
-
+                                                 //has to b req.file, req.coverImage will always b undefined
     if (!req.body.name || !req.body.categoryId || !req.file) {
         return res.status(400).json({
             success: false,
@@ -111,4 +112,30 @@ app.get('/api/getShowroom', function(req, res) {
         });
 })
 
+
+// DELETE SHOWROOM
+app.delete('/api/delShowroom', jsonParser,function (req, res) {
+
+    
+        // missing field
+        if (!req.body||!req.body.showroomId||!req.body.staffId) {
+            return res.status(400).json({
+                success: false,
+                message: "missing parameters"
+            });
+        }
+
+        showroom.delShowroom(req.body)
+            .then((result) => {
+                res.status(201).send(result);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    success: false,
+                    message: "Failed to delete showroom"
+                })
+            });
+    }
+);
 module.exports = app;
