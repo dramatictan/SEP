@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('/api/addShowroom', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                // multipart/form-data instead of application/json for file upload
+                'Content-Type': 'multipart/form-data'
             },
             body: JSON.stringify({
                 name: name,
@@ -45,3 +46,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
+
+
+
+
+
+
+
+
+
+
+// file import function
+function importData() {
+  let input = document.createElement('input');
+  input.type = 'file';
+  input.onchange = _ => {
+    // you can use this method to get file and perform respective operations
+            let files =   Array.from(input.files);
+            console.log(files);
+        };
+  input.click();
+  
+}

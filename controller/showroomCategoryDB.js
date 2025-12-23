@@ -1,17 +1,8 @@
 var express = require('express');
 var app = express();
 let middleware = require('./middleware.js');
+const uploadImg = require("../view/file-upload.js");
 
-// File storage import multer
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: './uploads/showrooms',
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
-});
-
-const upload = multer({ storage });
 
 var showroom = require('../model/showroomCategoryModel.js');
 
@@ -72,26 +63,29 @@ app.get('/api/getShowroomCategory',
 );
 
 // ADD SHOWROOM LAYOUT DESIGN
-// I cant figure out how to upload image
-app.post('/api/addShowroom', jsonParser, function(req, res) {
+app.post('/api/addShowroom', uploadImg.single("coverImage"), jsonParser, function(req, res) {
 
     console.log('BODY:', req.body);
-    // console.log('FILE:', req.file);
-    // upload.single('coverImage')
+    console.log('FILE:', req.file);
 
-    if (!req.body.name || !req.body.categoryId || !req.body.coverImage) {
+    if (!req.body.name || !req.body.categoryId || !req.file) {
         return res.status(400).json({
             success: false,
             message: "Missing required fields"
         });
     }
 
+    // save image to uploads/showrooms folder, to be displayed as src="/uploads/showrooms/filename"
+    const imagePath = `/uploads/showrooms/${req.file.filename}`;
+
+
     showroom.addShowroom({
         name: req.body.name,
         description: req.body.description,
         categoryId: req.body.categoryId,
-        coverImage: req.body.coverImage 
+        coverImage: imagePath 
     })
+
     .then(result => res.status(201).json(result))
     .catch(err => {
         console.error(err);

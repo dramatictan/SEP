@@ -1,6 +1,16 @@
 # SEP
 
 ## INTRODUCTION:
+
+Customer:
+URL:  http://localhost:8081/B/selectCountry.html
+email: junwei10255@gmail.com
+pwd: junwei123
+
+Staff of IslandFurniture:
+URL:  http://localhost:8081/A1/staffLogin.html
+email: admin@if.com
+
 ### Step 1:
 1. create .env
 
