@@ -1,101 +1,83 @@
-/* =========================
-   HERO CAROUSEL BASE
-========================= */
-
 #hero-carousel {
     margin-top: 40px;
 }
 
 .carousel-item {
-    height: 65vh;
+    height: 70vh;
     position: relative;
     background: #f5f5f5;
 }
 
-/* Image */
 .carousel-item img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-/* =========================
-   BOTTOM INFO RAIL
-========================= */
-
-.carousel-item::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 72px;
-    background: #111;
-    z-index: 1;
-}
-
-/* Caption container */
 .carousel-caption {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 16px 24px;
+    top: 50%;
+    left: 6vw;
+    transform: translateY(-50%);
+    padding: 0;
+    width: auto;
     text-align: left;
-    background: none;
     z-index: 2;
 }
 
-/* Caption inner alignment */
-.carousel-caption > * {
-    max-width: 600px;
+.caption-box {
+    width: 360px;
+    min-height: 260px;
+    padding: 28px 26px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
 }
 
-/* Category / tag */
-.carousel-caption small {
-    display: block;
-    color: #aaa;
-    font-size: 0.8rem;
+.caption-box small {
+    color: #cfcfcf;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
 }
 
-/* Title */
-.carousel-caption h5 {
-    color: #fff;
-    font-size: 1.25rem;
-    font-weight: 600;
+.caption-box h5 {
+    color: #ffffff;
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.15;
     margin: 0;
 }
 
-/* Subtitle */
-.carousel-caption p {
-    color: #ccc;
-    font-size: 0.95rem;
-    margin: 2px 0 0;
+.caption-box p {
+    color: #eeeeee;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
-
-/* =========================
-   CONTROLS & INDICATORS
-========================= */
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
 }
 
 .carousel-indicators {
-    bottom: 90px;
+    bottom: 24px;
 }
 
 .carousel-indicators [data-bs-target] {
-    background-color: #bbb;
+    background-color: #bcbcbc;
 }
 
 .carousel-indicators .active {
-    background-color: #000;
+    background-color: #ffffff;
 }

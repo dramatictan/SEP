@@ -19,9 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 div.innerHTML = `
                     <img src="${item.cover_image_url}" class="d-block w-100" alt="${item.name}" style="height:60vh; object-fit:cover;">
                     <div class="carousel-caption">
-                        <h5>${item.name}</h5>
-                        <small>${item.category_name}</small>
-                        <p>${item.description}</p>
+                        <div class = "caption-box">
+                            <h5>${item.name}</h5>
+                            <small>${item.category_name}</small>
+                            <p>${item.description}</p>
+                        </div>
                     </div>
                 `;
                 carouselInner.appendChild(div);
