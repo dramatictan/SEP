@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="carousel-caption">
                         <div class = "caption-box">
                             <h5>${item.name}</h5>
-                            <small>${item.category_name}</small>
+                            <small>Category: ${item.category_name}</small>
                             <p>${item.description}</p>
                         </div>
                     </div>
