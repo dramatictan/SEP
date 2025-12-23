@@ -33,6 +33,44 @@ var showroomPublicDB = {
                 });
             })
         })
+    },
+
+    showShowroomByCategory: function(category) {
+        return new Promise((resolve, reject) => {
+            const conn = db.getConnection();
+
+            conn.connect((err) => {
+                if (err) {
+                    conn.end();
+                    return reject(err);
+                }
+
+                let sql = `
+                    SELECT s.*, c.name AS category_name
+                    FROM showroom s
+                    JOIN showroom_category c
+                    ON s.category_id = c.id
+                `;
+
+                const params = [];
+
+                // if not 'all', filter by category
+                if (category && category !== 'all') {
+                    sql += ` WHERE c.name = ?`;
+                    params.push(category);
+                }
+
+                conn.query(sql, params, (err, rows) => {
+                    conn.end();
+
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    resolve(rows);
+                });
+            })
+        })
     }
 }
 

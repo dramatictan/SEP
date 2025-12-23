@@ -21,4 +21,19 @@ app.get('/api/showRandomCarousel', function (req, res) {
         })
 })
 
+app.get('/api/showShowroomByCategory', function (req, res) {
+    const category = req.query.category || 'all';
+    showroomPublic.showShowroomByCategory(category)
+        .then((result) => {
+            res.status(200).json(result);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+                success: false,
+                message: "Failed to retrieve showrooms"
+            });
+        });
+})
+
 module.exports = app;
