@@ -116,7 +116,7 @@ app.get('/api/getShowroom', function(req, res) {
 // DELETE SHOWROOM
 app.delete('/api/delShowroom', jsonParser,function (req, res) {
 
-    
+     
         // missing field
         if (!req.body||!req.body.showroomId||!req.body.staffId) {
             return res.status(400).json({
