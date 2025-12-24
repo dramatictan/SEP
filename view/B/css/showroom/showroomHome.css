@@ -6,6 +6,13 @@
     align-items: center;
     gap: 20px;
     margin: 20px 0;
+
+    position: sticky; /* stick when scrolling */
+    top: 0;           /* distance from top of viewport */
+    z-index: 999;     /* make sure it’s above other content */
+    background-color: #fff; /* ensure background covers content behind it */
+    padding: 10px 0;  /* optional padding for spacing */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* subtle shadow for depth */
 }
 
 /* Dropdown category*/
