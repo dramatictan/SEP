@@ -99,7 +99,10 @@ var showroomPublicDB = {
                 });
             });
         });
-    }
+    },
+
+    // Filter Panel Features
+    
 
 }
 
