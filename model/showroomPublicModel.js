@@ -130,7 +130,46 @@ var showroomPublicDB = {
                 });
             })
         })
-    } 
+    },
+
+    // Filter by Furniture category and/or dimensions 
+    filter: function() {
+        
+    },
+
+    // Individual Showroom Layout Display with furnitures attached 
+    showShowroomDetailsById: function(id) {
+        return new Promise((resolve, reject) => {
+            const conn = db.getConnection();
+
+            conn.connect((err) => {
+                if (err) {
+                    conn.end();
+                    return reject(err);
+                }
+
+                let sql = `
+                    SELECT 
+                        s.id AS showroom_id, s.name AS showroom_name, -- showroom info
+                        sf.furniture_id, sf.position_json,                        -- layout info
+                        f.IMAGEURL,                                              -- furniture image
+                        i.name AS furniture_name                                   -- furniture name
+                    FROM showroom s
+                    LEFT JOIN showroom_furniture sf ON s.id = sf.showroom_id
+                    LEFT JOIN furnitureentity f ON sf.furniture_id = f.ID
+                    LEFT JOIN itementity i ON sf.furniture_id = i.ID
+                    WHERE s.id = ?
+                `;
+
+                conn.query(sql, [id], (err, results) => {
+                    conn.end();
+                    if (err) return reject(err);
+                    resolve(results);
+                });
+            });
+        });
+    }
+
 
 }
 
