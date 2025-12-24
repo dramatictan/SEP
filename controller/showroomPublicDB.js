@@ -36,4 +36,20 @@ app.get('/api/showShowroomByCategory', function (req, res) {
         });
 })
 
+app.get('/api/showShowroomBySearch', function (req, res) {
+    const searchTerm = req.query.q || ''; // get ?q=searchTerm 
+
+    showroomPublic.searchShowroomByName(searchTerm)
+        .then((result) => {
+            res.status(200).json(result);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+                success: false,
+                message: "Failed to search showrooms"
+            });
+        });
+});
+
 module.exports = app;

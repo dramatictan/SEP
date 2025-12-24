@@ -71,7 +71,36 @@ var showroomPublicDB = {
                 });
             })
         })
+    },
+
+    searchShowroomByName: function(search) {
+        return new Promise((resolve, reject) => {
+            const conn = db.getConnection();
+
+            conn.connect((err) => {
+                if (err) {
+                    conn.end();
+                    return reject(err);
+                }
+
+                let sql = `
+                    SELECT s.*, c.name AS category_name
+                    FROM showroom s
+                    JOIN showroom_category c
+                    ON s.category_id = c.id
+                    WHERE s.name LIKE ?
+                `;
+                const params = [`%${search}%`]; // search
+
+                conn.query(sql, params, (err, rows) => {
+                    conn.end();
+                    if (err) return reject(err);
+                    resolve(rows);
+                });
+            });
+        });
     }
+
 }
 
 module.exports = showroomPublicDB;
