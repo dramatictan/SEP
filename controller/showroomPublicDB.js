@@ -78,11 +78,12 @@ app.get('/api/getShowroomDetails', function (req, res) {
 
     showroomPublic.showShowroomDetailsById(showroomId)
         .then((result) => {
-            // Optional: reshape into showroom info + furnitures array
+            // Showroom info + furnitures array
             let showroomData = {};
             if (result.length > 0) {
                 showroomData.id = result[0].showroom_id;
                 showroomData.name = result[0].showroom_name;
+                showroomData.coverImage = result[0].cover_image_url;
                 showroomData.furnitures = result.map(item => ({
                     id: item.furniture_id,
                     name: item.furniture_name,
