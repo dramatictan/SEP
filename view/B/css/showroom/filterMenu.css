@@ -21,15 +21,17 @@
 }
 
 .filter-panel {
-    width: 100%;
-    max-width: 400px;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 90%;
     background: white;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     padding: 20px;
     transform: translateY(100%);
     transition: transform 0.3s ease-in-out;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 -2px 15px rgba(0,0,0,0.3);
+    overflow-y: auto;
 }
 
 .filter-popup.active .filter-panel {
@@ -40,29 +42,76 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.filter-description {
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background-color: #f8f9fa; 
+    border-left: 4px solid #007bff; 
+    border-radius: 8px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.filter-description p {
+    margin: 0;
+    line-height: 1.5;
 }
 
 .close-btn {
-    font-size: 1.5rem;
+    font-size: 4.0rem;
     cursor: pointer;
     border: none;
     background: none;
+    color: red;
 }
 
-.filter-group {
-    margin-bottom: 15px;
+.filter-columns {
+    display: flex;
+    gap: 30px;
 }
 
-.filter-group label {
-    display: block;
-    margin-bottom: 5px;
+/* Left column (brands) */
+.filter-column.brands {
+    flex: 1;
 }
 
-.filter-group input,
-.filter-group select {
+.filter-column.right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Section headings */
+.filter-column h6 {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* Checkboxes */
+.checkbox-list label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.checkbox-list input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: #007bff;
+}
+
+/* Dimensions fields */
+.dimensions input {
     width: 100%;
     padding: 8px;
+    margin-bottom: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
 }
@@ -70,6 +119,7 @@
 .apply-btn {
     width: 100%;
     padding: 12px;
+    margin-top: 15px;
     background: #007bff;
     color: white;
     border: none;

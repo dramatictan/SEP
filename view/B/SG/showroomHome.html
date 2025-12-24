@@ -91,22 +91,47 @@
                     <span id="close-filter" class="close-btn">&times;</span>
                 </div>
 
-                <form class="filter-form">
-                    <!-- Brand select -->
-                    <div class="filter-group">
-                        <label for="brandFilter">Brand:</label>
-                        <select id="brandFilter">
-                            <option value="all">All</option>
-                            <option value="brand1">Brand 1</option>
-                            <option value="brand2">Brand 2</option>
-                            <option value="brand3">Brand 3</option>
-                        </select>
-                    </div>
+                <div class="filter-description">
+                    <p>Look for Showrooms that consist your desired furnitures.</p>
+                </div>
 
-                    <!-- Dimensions input -->
-                    <div class="filter-group">
-                        <label for="dimensions">Dimensions (L×W×H):</label>
-                        <input type="text" id="dimensions" placeholder="e.g., 200×150×100 cm">
+                <form class="filter-form">
+                    <div class = "filter-columns">
+
+                        <!-- Left side: Brands list -->
+                        <div class = "filter-column brands">
+                            <h6>Brands</h6>
+                            <div class = "checkbox-list">
+                                <label><input type="checkbox" value="brand1"> Brand 1</label>
+                                <label><input type="checkbox" value="brand2"> Brand 2</label>
+                                <label><input type="checkbox" value="brand3"> Brand 3</label>
+                                <label><input type="checkbox" value="brand4"> Brand 4</label>
+                                <label><input type="checkbox" value="brand5"> Brand 5</label>
+                            </div>
+                        </div>
+
+                        <!-- Right column -->
+                        <div class = "filter-column right-column">
+                            <!-- Dimension -->
+                            <div class = "dimensions">
+                                <h6>Dimensions</h6>
+                                <input type="text" placeholder="Length (cm)">
+                                <input type="text" placeholder="Width (cm)">
+                                <input type="text" placeholder="Height (cm)">
+                            </div>
+
+                            <!-- Furniture type -->
+                            <div class="furniture-type">
+                                <h6>Furniture Type</h6>
+                                <div class="checkbox-list">
+                                    <label><input type="checkbox" value="sofa"> Sofa</label>
+                                    <label><input type="checkbox" value="table"> Table</label>
+                                    <label><input type="checkbox" value="bed"> Bed</label>
+                                    <label><input type="checkbox" value="chair"> Chair</label>
+                                    <label><input type="checkbox" value="cabinet"> Cabinet</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <button type="submit" class="apply-btn">Apply Filters</button>
