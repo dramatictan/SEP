@@ -52,4 +52,18 @@ app.get('/api/showShowroomBySearch', function (req, res) {
         });
 });
 
+app.get('/api/getFurnitureCategory', function (req, res) {
+    showroomPublic.showFurnitureCategory()
+        .then((result) => {
+            res.status(200).json(result);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+                success: false,
+                message: "Failed to retrieve furniture categories"
+            });
+        })
+})
+
 module.exports = app;
