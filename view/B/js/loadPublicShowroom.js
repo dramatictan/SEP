@@ -54,11 +54,7 @@ document.addEventListener('DOMContentLoaded', loadAllShowrooms);
 
                             ${!isLarge ? `<p class="card-text text-muted small-desc">${shortDesc}</p>` : ''}
 
-                            <a 
-                                href="showroomDetail.html?id=${showroom.id}" 
-                                class="btn btn-dark view-btn mt-auto">
-                                View Showroom
-                            </a>
+                            <a href="showroomDetail.html?id=${showroom.id}" class="btn view-btn mt-auto">View Showroom</a>
                         </div>
                     </div>
                 </div>
