@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 .main-showcase {
-    padding: 40px 0;
-    background-color: #f8f9fa;
+    padding: 48px 0;
+    background: linear-gradient(180deg, #f8f9fa 0%, #eef1f4 100%);
 }
 
 .showroom-layout > div:first-child {
@@ -17,56 +17,83 @@
     max-width: 100%;
 }
 
+.showroom-layout > .col-md-3,
+.showroom-layout > .col-lg-2 {
+    padding-left: 0 !important;
+}
+
 /* Furniture list */
 .furniture-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    max-height: 75vh;
+    gap: 14px;
+    max-height: 78vh;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-right: 10px;
+}
+
+.furniture-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.furniture-list::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.25);
+    border-radius: 6px;
 }
 
 .furniture-item {
     display: flex;
+    width: 500px;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     background: #ffffff;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 14px;
+    padding: 18px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
 .furniture-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.16);
 }
 
 .furniture-item img {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 10px;
     flex-shrink: 0;
 }
 
 .furniture-item p {
     margin: 0;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
-    color: #333;
+    color: #222;
+    line-height: 1.3;
+}
+
+.furniture-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.furniture-name {
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 /* main showroom */
 .showroom-image {
     width: 100%;
-    height: 75vh;
+    height: 85vh;
     background: #ffffff;
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.15);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -76,5 +103,29 @@
 .showroom-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
+}
+
+.showroom-image img {
+    transition: transform 0.6s ease;
+}
+
+.showroom-image:hover img {
+    transform: scale(1.04);
+}
+
+.furniture-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #1f1f1f;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.4px;
+}
+
+.furniture-title i {
+    font-size: 20px;
+    color: #6c757d;
 }

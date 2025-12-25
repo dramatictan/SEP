@@ -46,7 +46,9 @@ function renderShowroom(showroom) {
 
         div.innerHTML = `
             <img src="${f.image}" alt="${f.name}">
-            <p>${f.name}</p>
+            <div class="furniture-info">
+                <p class="furniture-name">${f.name}</p>
+            </div>
         `;
 
         furnitureList.appendChild(div);
