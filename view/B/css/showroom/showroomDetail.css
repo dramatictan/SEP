@@ -26,11 +26,11 @@
 .furniture-list {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
     max-height: 78vh;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-right: 10px;
+    padding-right: 12px;
 }
 
 .furniture-list::-webkit-scrollbar {
@@ -44,28 +44,36 @@
 
 .furniture-item {
     display: flex;
-    width: 500px;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
+    width: 100%;
     background: #ffffff;
-    border-radius: 14px;
-    padding: 18px;
+    border-radius: 16px;
+    padding: 18px 20px;
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
 .furniture-item:hover {
-    transform: translateY(-3px) scale(1.01);
-    box-shadow: 0 14px 32px rgba(0,0,0,0.16);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.16);
 }
 
 .furniture-item img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 10px;
+    width: 84px;
+    height: 84px;
+    object-fit: contain;
+    border-radius: 12px;
     flex-shrink: 0;
+    background: #f6f6f6;
+}
+
+.furniture-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
 }
 
 .furniture-item p {
@@ -73,45 +81,9 @@
     font-weight: 600;
     font-size: 14px;
     color: #222;
-    line-height: 1.3;
-}
-
-.furniture-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.furniture-name {
+    line-height: 1.4;
     white-space: nowrap;
     overflow: hidden;
-}
-
-/* main showroom */
-.showroom-image {
-    width: 100%;
-    height: 85vh;
-    background: #ffffff;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Main image itself */
-.showroom-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.showroom-image img {
-    transition: transform 0.6s ease;
-}
-
-.showroom-image:hover img {
-    transform: scale(1.04);
 }
 
 .furniture-title {
@@ -128,4 +100,43 @@
 .furniture-title i {
     font-size: 20px;
     color: #6c757d;
+}
+
+
+/* main showroom */
+.showroom-image {
+    width: 100%;
+    height: 85vh;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main image itself */
+.showroom-image {
+    width: 100%;
+    height: 85vh;
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 48px rgba(0,0,0,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.showroom-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.showroom-image:hover img {
+    transform: scale(1.025);
 }
