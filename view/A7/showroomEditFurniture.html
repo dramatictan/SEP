@@ -1,4 +1,4 @@
-<!-- Author: Javeir tan jia ye -->
+<!-- Author: Javier tan jia ye -->
 <html lang="en">
     <head>
         <script src="../header2.js"></script>
@@ -33,6 +33,26 @@
                             </ol>
                         </div>
                     </div>
+
+
+                    <!-- add furniture popup form -->
+                    <div id="popup" class="popup">
+                        <div class="popup-content">
+                            <span class="close" onclick="closePopup()">&times;</span>
+                            <h2>Add furniture</h2>                      <!-- target="_blank" opens in new tab-->
+                            <a href="http://localhost:8081/B/SG/virtualStore.html" target="_blank">
+                                Open furniture catalog in a new tab to browse for furniture.
+                            </a>
+
+                            <br><br>
+                            
+                            <form id="add-furniture-form">
+                                <label for="furniture-sku">Enter Furniture Name:</label><br>
+                                <input type="text" id="furniture-name" name="furniture-name" required><br><br>
+                                <input type="submit" value="Add Furniture">
+                        </div>
+                    </div>
+
 
 
 

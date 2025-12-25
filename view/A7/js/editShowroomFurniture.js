@@ -27,12 +27,18 @@ function getFurniture(arr){
         <div class="furniture-item">
             <b>${arr[i].NAME}</b><br>
             <img src="${arr[i].IMAGEURL}" alt="${arr[i].NAME}" style="width:100%;"><br>
-            <button class="btn-delete btn" style="width:100%;" data-id="${arr[i].ID}"><i class="fas fa-trash"></i>Delete</button>
+            <button class="btn-delete btn" style="width:100%;" data-id="${arr[i].ID}"><i class="fas fa-trash"></i> Delete</button>
         </div>
         
             `
     }
 
+
+    furnitureHTML += `
+        <div class="furniture-item add-furniture" style="background-color: transparent;">
+            <button class="btn-add"><i class="fas fa-plus-circle"></i></button>
+        </div>
+`
     document.getElementById('furniture-list').innerHTML = furnitureHTML;
     
 } 
@@ -51,6 +57,19 @@ function getFurniture(arr){
 
 
 
+function openPopup() {
+    document.getElementById("popup").style.display = "block";
+}
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+// Close popup if user clicks outside the content box
+window.onclick = function(event) {
+    const popup = document.getElementById("popup");
+    if (event.target === popup) {
+        popup.style.display = "none";
+    }
+};
 
 
 
@@ -81,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    //load furniture items
 });
 
 
@@ -96,6 +114,10 @@ document.addEventListener("click", function(e) {
     if (e.target.classList.contains("btn-delete")) {
         const id = e.target.dataset.id;
         del(id);
+    }
+
+    if (e.target.classList.contains("btn-add")) {
+        openPopup()
     }
 });
 
