@@ -19,6 +19,24 @@ function GetURLParameter(sParam){
 
 
 
+var countryPrefix = localStorage.getItem('urlPrefix');
+//get sku from query parameter
+var currentUrl = new URL(window.location.href);
+var sku = currentUrl.searchParams.get("sku");
+var memberEmail = sessionStorage.getItem('memberEmail');
+
+var countryId = localStorage.getItem('countryId');
+console.log('countryId: ' + countryId);
+// fetch(new Request('/api/getRetailProductBySku?sku=' + sku + '&countryId=' + countryId,
+//     {
+//         method: 'GET'
+//     })).then(function (response) {
+//         return response.json();
+//     }).then(function (product) {
+//         console.log(product);
+//     }).catch(function(error) {
+//         console.log(error);
+//     });
 
 
 
@@ -26,8 +44,7 @@ function GetURLParameter(sParam){
 
 
 
-
-
+let furnitureList = '';
 
 
 
@@ -41,11 +58,13 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(res => res.json())
     .then(data => {
         console.log(data)
+        furnitureList=data.furniture
         const img = document.getElementById("showroom-img");
 
-        img.src = `${data[0].cover_image_url}`;
-        img.alt = data[0].cover_image_url;
+        img.src = `${data.showroom.cover_image_url}`;
+        img.alt = data.showroom.cover_image_url;
 
+        
     })
     .catch(err => {
         console.error(err);

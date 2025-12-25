@@ -185,36 +185,60 @@ var showroomDB = {
     },
 
     // Get showroom by id
-    getShowroomById: function(showroomId) {
+    getShowroomById: function (showroomId) {
         return new Promise((resolve, reject) => {
             const conn = db.getConnection();
 
-            conn.connect((err) => {
+            conn.connect(err => {
                 if (err) {
                     conn.end();
                     return reject(err);
                 }
 
-                const sql = `
+                const showroomSql = `
                     SELECT s.*, c.name AS category_name
                     FROM showroom s
                     JOIN showroom_category c
                     ON s.category_id = c.id
-                    WHERE s.id = ?
+                    WHERE s.id = ?;
                 `;
 
-                conn.query(sql, [showroomId], (err, rows) => {
-                    conn.end();
-
+                conn.query(showroomSql, [showroomId], (err, showroomRows) => {
                     if (err) {
+                        conn.end();
                         return reject(err);
                     }
 
-                    resolve(rows);
+                    if (showroomRows.length === 0) {
+                        conn.end();
+                        return resolve(null);
+                    }
+
+                    const furnitureSql = `
+                        SELECT f.*
+                        FROM showroom_furniture sf
+                        JOIN furnitureentity f
+                        ON f.id = sf.furniture_id
+                        WHERE sf.showroom_id = ?;
+                    `;
+
+                    conn.query(furnitureSql, [showroomId], (err, furnitureRows) => {
+                        conn.end();
+
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        resolve({
+                            showroom: showroomRows[0],
+                            furniture: furnitureRows
+                        });
+                    });
                 });
-            })
-        })
+            });
+        });
     },
+
 
     // Delete showroom by ID
     delShowroom: function (details) { 

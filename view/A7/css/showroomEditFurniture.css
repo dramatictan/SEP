@@ -1,6 +1,12 @@
 .showroom{
     background-color: red;
     width: 100%;
+    border-radius: 1rem;
 }
 
 
+.furniture{
+    background-color: blue;
+    width: 100%;
+    border-radius: 1rem;
+}
