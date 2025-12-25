@@ -215,10 +215,12 @@ var showroomDB = {
                     }
 
                     const furnitureSql = `
-                        SELECT f.*
+                        SELECT f.*, position_json, fe.IMAGEURL
                         FROM showroom_furniture sf
-                        JOIN furnitureentity f
+                        JOIN itementity f
                         ON f.id = sf.furniture_id
+                        JOIN furnitureentity fe
+                        ON fe.id = sf.furniture_id
                         WHERE sf.showroom_id = ?;
                     `;
 

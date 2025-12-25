@@ -17,34 +17,40 @@ function GetURLParameter(sParam){
     }
 }
 
-
-
-var countryPrefix = localStorage.getItem('urlPrefix');
-//get sku from query parameter
-var currentUrl = new URL(window.location.href);
-var sku = currentUrl.searchParams.get("sku");
-var memberEmail = sessionStorage.getItem('memberEmail');
-
 var countryId = localStorage.getItem('countryId');
-console.log('countryId: ' + countryId);
-// fetch(new Request('/api/getRetailProductBySku?sku=' + sku + '&countryId=' + countryId,
-//     {
-//         method: 'GET'
-//     })).then(function (response) {
-//         return response.json();
-//     }).then(function (product) {
-//         console.log(product);
-//     }).catch(function(error) {
-//         console.log(error);
-//     });
+function getFurniture(arr){
+    console.log(arr);
+
+    let furnitureHTML = '';
+    for (let i = 0; i < arr.length; i++) {
+        furnitureHTML += `
+        <div class="furniture-item">
+            <b>${arr[i].NAME}</b><br>
+            <img src="${arr[i].IMAGEURL}" alt="${arr[i].NAME}" style="width:100%;"><br>
+            <button class="btn-delete btn" style="width:100%;" data-id="${arr[i].ID}"><i class="fas fa-trash"></i>Delete</button>
+        </div>
+        
+            `
+    }
+
+    document.getElementById('furniture-list').innerHTML = furnitureHTML;
+    
+} 
+
+
+// get single item by sku (country id is not needed but nice to have)
+// fetch(`/api/getFurnitureBySku?sku=${arr[i].SKU}&countryId=${countryId}`, {
+//     method: 'GET',
+// }).then(function (response) {
+//     return response.json();
+// }).then(function (product) {
+//     console.log(product);
+// }).catch(function(error) {
+//     console.log(error);
+// });
 
 
 
-
-
-
-
-let furnitureList = '';
 
 
 
@@ -58,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(res => res.json())
     .then(data => {
         console.log(data)
-        furnitureList=data.furniture
+        getFurniture(data.furniture)
         const img = document.getElementById("showroom-img");
 
         img.src = `${data.showroom.cover_image_url}`;
@@ -70,6 +76,12 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error(err);
         alert('Failed to load showroom');
     });
+
+
+
+
+
+    //load furniture items
 });
 
 

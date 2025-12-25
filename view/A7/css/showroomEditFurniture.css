@@ -6,7 +6,42 @@
 
 
 .furniture{
-    background-color: blue;
+    background-color: #d3d3d3;
     width: 100%;
     border-radius: 1rem;
+    padding: 0.3rem;
+}
+
+.furniture-item{
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1rem;
+    width: 12rem;
+}
+
+#furniture-list {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+}
+
+
+
+
+/* btns */
+.btn-delete {
+    background: #fff5f5;
+    color: #b42318;
+    border-color: #f5c2c7;
+}
+
+.btn-delete:hover {
+    background: #ffe3e3;
+    border-color: #f1aeb5;
+}
+
+.btn-delete:active {
+    transform: scale(0.96);
 }
