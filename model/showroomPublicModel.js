@@ -168,6 +168,36 @@ var showroomPublicDB = {
                 });
             });
         });
+    },
+
+    showFurnitureDetailById: function(id) {
+        return new Promise((resolve, reject) => {
+            const conn = db.getConnection();
+
+            conn.connect((err) => {
+                if (err) {
+                    conn.end();
+                    return reject(err);
+                }
+
+                let sql = `
+                    SELECT
+                        sf.furniture_id,
+                        f.IMAGEURL,
+                        i.NAME, i.CATEGORY, i.DESCRIPTION, i.HEIGHT, i.WIDTH, i._LENGTH, i.SKU
+
+                    FROM showroom_furniture sf
+                    LEFT JOIN furnitureentity f ON sf.furniture_id = f.ID
+                    LEFT JOIN itementity i ON sf.furniture_id = i.ID
+                    WHERE sf.furniture_id = ? 
+                `
+                conn.query(sql, [id], (err, results) => {
+                    conn.end();
+                    if (err) return reject(err);
+                    resolve(results);
+                });
+            })
+        })
     }
     
 }
