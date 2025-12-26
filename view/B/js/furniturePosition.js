@@ -18,6 +18,14 @@ function renderFurnitureHotspots(showroom) {
         dot.style.left = `${f.position.x * 100}%`;
         dot.style.top  = `${f.position.y * 100}%`;
 
+        // store furniture id
+        dot.dataset.id = f.ID
+
+        // get function from another js file
+        dot.addEventListener("click", () => {
+            showFurniturePanel(f.id);
+        })
+
         container.appendChild(dot);
     });
 }

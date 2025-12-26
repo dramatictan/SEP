@@ -156,7 +156,7 @@
     position: absolute; /* Allow positioning for the dots all over the image*/
     width: 14px;
     height: 14px;
-    background-color: #ff4d4f;
+    background-color: #eb1b1e;
     border-radius: 50%;
 
     /* Place the dot in the center first, then based on json value, move by x and y axis*/
