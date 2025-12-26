@@ -22,8 +22,8 @@ function renderFurnitureHotspots(showroom) {
         dot.dataset.id = f.ID
 
         // get function from another js file
-        dot.addEventListener("click", () => {
-            showFurniturePanel(f.id);
+        dot.addEventListener("click", (e) => {
+            showFurniturePanel(e, f.id);
         })
 
         container.appendChild(dot);
