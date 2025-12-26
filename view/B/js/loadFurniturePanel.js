@@ -1,13 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
     const closeBtn = document.querySelector(".close-btn");
+    const panel = document.getElementById("furniture-panel");
+    
     if (closeBtn) {
         closeBtn.addEventListener("click", () => {
             document.getElementById("furniture-panel").classList.add("hidden");
         });
-    }
+    } 
+
+    // press anywhere to close panel
+    document.addEventListener("click", (e) => {
+        if (!panel.classList.contains("hidden") &&
+            !panel.contains(e.target)) {
+            panel.classList.add("hidden");
+        }
+    });
+
 });
 
 function showFurniturePanel(event, furnitureId) { 
+    event.stopPropagation();
+
     fetch(`/api/getFurnitureDetailById?id=${furnitureId}`)
         .then(res => res.json())
         .then(res => {
@@ -21,7 +34,7 @@ function showFurniturePanel(event, furnitureId) {
             // Fill data
             document.getElementById("panel-image").src = f.IMAGEURL;
             document.getElementById("panel-name").textContent = f.NAME;
-            document.getElementById("panel-category").textContent = f.CATEGORY;
+            document.getElementById("panel-category").textContent = `TYPE: ${f.CATEGORY}`;
 
             document.getElementById("panel-length").textContent = `L: ${f._LENGTH} cm`;
             document.getElementById("panel-height").textContent = `H: ${f.HEIGHT} cm`;
@@ -29,7 +42,7 @@ function showFurniturePanel(event, furnitureId) {
 
             // POSITIONING LOGIC
             // Use clientX and clientY for 'fixed' positioning
-            // We add 20px offset so the panel doesn't cover the dot itself
+            // add 20px offset so the panel doesn't cover the dot itself
             panel.style.left = (event.clientX + 20) + "px"; 
             panel.style.top = (event.clientY - 50) + "px";
 
