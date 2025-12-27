@@ -6,10 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBtn = document.getElementById('searchBtn');
     const applyFilter = document.getElementById("apply-filter");
 
+    const filterPopup = document.getElementById("filter-popup");
+
     // Filter 
-    applyFilter.addEventListener("click", () => {
+    filterPopup.addEventListener("click", () => {
         const filters = collectFilters();
         filterShowrooms(filters);
+
+        // Close the filter popup 
+        filterPopup.classList.remove("active");
     })
 
     // target for search button click
