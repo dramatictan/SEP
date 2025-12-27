@@ -127,7 +127,6 @@ app.get('/api/getShowroomById/:id', function(req, res) {
         });
 })
 
-
 // DELETE SHOWROOM
 app.delete('/api/delShowroom', jsonParser,function (req, res) {
 
@@ -149,6 +148,58 @@ app.delete('/api/delShowroom', jsonParser,function (req, res) {
                 res.status(500).json({
                     success: false,
                     message: "Failed to delete showroom"
+                })
+            });
+    }
+);
+
+// DELETE FURNITURE FROM SHOWROOM
+app.delete('/api/delShowroomFurniture/:showroomId', jsonParser,function (req, res) {
+
+     
+        // missing field
+        if (!req.body||!req.params.showroomId||!req.body.staffId) {
+            return res.status(400).json({
+                success: false,
+                message: "missing parameters"
+            });
+        }
+
+        showroom.delShowroomFurniture(req.body, req.params.showroomId)
+            .then((result) => {
+                res.status(201).send(result);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    success: false,
+                    message: "Failed to delete showroom"
+                })
+            });
+    }
+);
+
+// ADD SHOWROOM FURNITURE
+app.post('/api/addShowroomFurniture/:showroomId', jsonParser,function (req, res) {
+
+     
+        // missing field
+        if (!req.body||!req.params.showroomId) {
+            return res.status(400).json({
+                success: false,
+                message: "missing parameters"
+            });
+        }
+
+    showroom.addShowroomFurniture(req.body, req.params.showroomId)
+            .then((result) => {
+                res.status(201).send(result);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    success: false,
+                    message: "Failed to add furniture to showroom"
                 })
             });
     }
