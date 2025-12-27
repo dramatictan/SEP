@@ -230,38 +230,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
-// assign btns
-// doing it like this instead of onclick="del()" for scalability
-document.addEventListener("click", function(e) {
-    if (e.target.classList.contains("btn-delete")) {
-        const id = e.target.dataset.id;
-        del(id);
-    }
-
-    if (e.target.classList.contains("btn-add")) {
-        event.preventDefault();
-        add(document.getElementById("furniture-name").value);
-    }
-
-    if (e.target.classList.contains("popup-btn")) {
-        openPopup()
-    }
-});
-// disabl right click for canva point removal
-canvas.addEventListener("contextmenu", (e) => {
-  e.preventDefault();
-});
-
-
-
-
-
-
-
-
-
 // canvas
 const points = [];
 
@@ -294,28 +262,80 @@ function redraw() {
     });
 }
 
-canvas.addEventListener("mousedown", (e) => {
-    if (e.button !== 2) return; // 2 = right click
+canvas.addEventListener("mousedown", e => {
+  if (e.button !== 2) return; // right-click only
 
-    const rect = canvas.getBoundingClientRect();
-    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+  const rect = canvas.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+  const y = (e.clientY - rect.top) * (canvas.height / rect.height);
 
-    removeNearestPoint(x, y);
+  // Find nearest point
+  const hitRadius = 10;
+  clickedPointIndex = null;
+
+  for (let i = points.length - 1; i >= 0; i--) {
+    const p = points[i];
+    const dx = p.x - x;
+    const dy = p.y - y;
+    if (Math.sqrt(dx*dx + dy*dy) <= hitRadius) {
+      clickedPointIndex = i;
+      break;
+    }
+  }
+
+  const menu = document.getElementById("context-menu");
+
+  if (clickedPointIndex !== null) {
+    // Show menu at cursor
+    menu.style.left = `${e.pageX}px`;
+    menu.style.top = `${e.pageY}px`;
+    menu.style.display = "block";
+  } else {
+    menu.style.display = "none"; // hide if no point nearby
+  }
 });
 
-function removeNearestPoint(x, y) {
-    const hitRadius = 20;
 
-    for (let i = points.length - 1; i >= 0; i--) {
-        const p = points[i];
-        const dx = p.x - x;
-        const dy = p.y - y;
 
-        if (Math.sqrt(dx * dx + dy * dy) <= hitRadius) {
-            points.splice(i, 1);
+
+
+// assign btns
+// doing it like this instead of onclick="del()" for scalability
+document.addEventListener("click", function(e) {
+    //for canva
+// Hide menu if clicking elsewhere
+    if (!canvas.contains(e.target)) {
+        document.getElementById("context-menu").style.display = "none";
+    }
+
+    // if (e.target.classList.contains("btn-delete")) {
+    //     const id = e.target.dataset.id;
+    //     del(id);
+    // }
+
+    // if (e.target.classList.contains("btn-add")) {
+    //     event.preventDefault();
+    //     add(document.getElementById("furniture-name").value);
+    // }
+
+    if (e.target.classList.contains("remove-point-btn")) {
+        if (clickedPointIndex !== null) {
+            points.splice(clickedPointIndex, 1);
             redraw();
-            return;
+            clickedPointIndex = null;
+            document.getElementById("context-menu").style.display = "none";
         }
     }
-}
+
+    // if (e.target.classList.contains("popup-btn")) {
+    //     openPopup()
+    // }
+
+    if (e.target.id === "tag-furniture-btn"){
+        openPopup()
+    }
+});
+// disabl right click for canva point removal
+canvas.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+});

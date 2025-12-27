@@ -39,7 +39,7 @@
                     <div id="popup" class="popup">
                         <div class="popup-content">
                             <span class="close" onclick="closePopup()">&times;</span>
-                            <h2>Add furniture</h2>                      <!-- target="_blank" opens link in new tab-->
+                            <h2>Tag furniture</h2>                      <!-- target="_blank" opens link in new tab-->
                             <a href="http://localhost:8081/B/SG/virtualStore.html" target="_blank">
                                 Open furniture catalog in a new tab to browse for furniture.
                             </a>
@@ -60,7 +60,11 @@
                         <img id="showroom-img" src="" alt="" style="width: 100%;border-radius: 1rem;">
                     </div> -->
                     
-
+                    <!-- Custom context menu -->
+                    <div id="context-menu">
+                        <button class="btn context-menu-btn" id="remove-point-btn">Remove</button>
+                        <button class="btn context-menu-btn" id="tag-furniture-btn">Tag furniture</button>
+                    </div>
 
                     <div class="showroom" id="showroom">
                         <canvas id="showroom-canvas"></canvas>
