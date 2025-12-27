@@ -144,24 +144,25 @@ var showroomPublicDB = {
                     return reject(err);
                 }
 
-                console.log('MODEL FILTERS:', filters);
+                console.log('Filters:', filters);
 
-                /* SAMPPLE INPUT POSTMAN
-                        {
-                            "categories": ["Tables & Desks"],
-                            "length": 200,
-                            "height": 50
-                        }
+                /** SAMPLE INPUT 
+                {
+                    "name": "a" ,
+                    "categories": ["Beds & Mattresses"],
+                    
+                    "width": 10,
+                    "height": 44,
+                    "length": 44
+                }
                 */
 
                 let sql = `
-                    SELECT DISTINCT s.*
+                    SELECT s.*
                     FROM showroom s
-                    WHERE EXISTS (
-                        SELECT 1
-                        FROM showroom_furniture sf
-                        JOIN itementity f ON sf.furniture_id = f.ID
-                        WHERE sf.showroom_id = s.id
+                    JOIN showroom_furniture sf ON sf.showroom_id = s.id
+                    JOIN itementity f ON sf.furniture_id = f.ID
+                    WHERE 1=1
                 `;
 
                 const params = [];
@@ -191,17 +192,22 @@ var showroomPublicDB = {
                 // Furniture Name Filter
                 if (filters.name) {
                     sql += ` AND f.NAME LIKE ?`;
-                    params.push(`%${filters.name}%`)
+                    params.push(`%${filters.name}%`);
                 }
 
-                // close EXISTS
-                sql += `)`;
+                // Group by showroom and ensure all selected categories exist
+                sql += ` GROUP BY s.id`;
+
+                if (filters.categories && filters.categories.length > 0) {
+                    sql += ` HAVING COUNT(DISTINCT f.CATEGORY) = ?`;
+                    params.push(filters.categories.length);
+                }
 
                 console.log('FINAL SQL:', sql);
                 console.log('PARAMS:', params);
 
                 conn.query(sql, params, (err, results) => {
-                    conn.end(); 
+                    conn.end();
 
                     if (err) {
                         console.error('SQL ERROR:', err);
