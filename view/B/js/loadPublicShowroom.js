@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
+    const applyFilter = document.getElementById("apply-filter");
+
+    // Filter 
+    applyFilter.addEventListener("click", () => {
+        const filters = collectFilters();
+        filterShowrooms(filters);
+    })
 
     // target for search button click
     searchBtn.addEventListener('click', () => {
@@ -63,9 +70,68 @@ function search(q) {
         .catch(err => console.error('Failed to search', err));
 }
 
+// Filter showrooms that have those furnitures
+function filterShowrooms(filters) {
+
+    console.log("Filter payload: ", filters);
+
+    fetch(`/api/filterShowroom`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(filters)
+    })
+
+    .then(res => {
+        if (res.status === 404) {
+            return res.json().then(r => {
+                renderShowrooms([]);
+                console.warn(r.message);
+            });
+        }
+        return res.json();
+    })
+
+    .then(result => {
+        if (!result) return;
+        renderShowrooms(result.data);
+    })
+    .catch(err => {
+        console.error('Failed to filter showrooms', err);
+    });
+}
+
+function collectFilters() {
+    return {
+        name: document.getElementById('searchInput').value.trim() || null,
+        categories: getSelectedCategories(),
+        length: Number(document.getElementById('lengthInput')?.value) || null,
+        width: Number(document.getElementById('widthInput')?.value) || null,
+        height: Number(document.getElementById('heightInput')?.value) || null
+    };
+}
+
+function getSelectedCategories() {
+    const checked = document.querySelectorAll(
+        '#furniture-list input[type="checkbox"]:checked'
+    );
+
+    return Array.from(checked).map(cb => cb.value);
+}
+
 function renderShowrooms(showrooms) {
     const grid = document.getElementById('showroomGrid');
     grid.innerHTML = '';
+
+    if (!showrooms || showrooms.length === 0) {
+        grid.innerHTML = `
+            <div class="col-12 text-center text-muted mt-5">
+                No showrooms found
+            </div>
+        `
+        return;
+    }
 
     // loop through showrooms
     showrooms.forEach((showroom, index) => {
