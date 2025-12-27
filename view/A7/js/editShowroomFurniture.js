@@ -78,29 +78,29 @@ function getFurniture(arr){
 
 
 
-// function del(id){
-//     let staff = JSON.parse(sessionStorage.getItem("staff"))
-//     const data = {
-//         staffId: parseInt(staff.id),
-//         furnitureId: id
-//     }
+function del(id){
+    let staff = JSON.parse(sessionStorage.getItem("staff"))
+    const data = {
+        staffId: parseInt(staff.id),
+        furnitureId: id
+    }
 
-//     fetch(`/api/delShowroomFurniture/${GetURLParameter(param1)}`, {
-//         method: "DELETE",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(data)
-//     }).then(function (response) {
-//         location.reload();
-//         return response.json();
-//     }).catch(function(error) {
-//         console.log(error);
-//     });
-// }
+    fetch(`/api/delShowroomFurniture/${GetURLParameter(param1)}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    }).then(function (response) {
+        location.reload();
+        return response.json();
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
 
 // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_draggable
-//Make the DIV element draggagle:
+// Make the DIV element draggagle:
 // function dragElement(elmnt) {
 //     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
@@ -188,6 +188,9 @@ window.onclick = function(event) {
 
 
 // canvas
+// https://www.javascripttutorial.net/web-apis/javascript-canvas/
+// https://codelucky.com/javascript-canvas/
+// https://stackoverflow.com/questions/14012768/html5-canvas-background-image
 const points = [];
 
 const canvas = document.getElementById("showroom-canvas");
@@ -304,6 +307,11 @@ document.addEventListener("click", function(e) {
             redraw();
             clickedPointIndex = null;
             document.getElementById("context-menu").style.display = "none";
+
+            
+            const id = e.target.dataset.id;
+            console.log(id);
+            del(id);
         }
     }
 
@@ -369,7 +377,9 @@ canvas.addEventListener("mousedown", e => {
             `;
             menu.appendChild(infoDiv);
 
-            document.getElementById("context-menu-buttons").innerHTML = `<button class="btn context-menu-btn" id="remove-point-btn">Remove</button>`;
+            document.getElementById("context-menu-buttons").innerHTML = `
+                <button class="btn context-menu-btn" id="remove-point-btn" data-id=${point.id}>Remove</button>
+            `;
         }else{
             document.getElementById("context-menu-buttons").innerHTML = `
                 <button class="btn context-menu-btn" id="tag-furniture-btn">Tag furniture</button>
