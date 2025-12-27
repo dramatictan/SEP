@@ -66,27 +66,7 @@ function GetURLParameter(sParam){
 
 // } 
 
-/// no you cannot add a kit kat to the showroom.
-// function add(furnitureName){
-//     let staff = JSON.parse(sessionStorage.getItem("staff"))
-//     const data = {
-//         staffId: parseInt(staff.id),
-//         furnitureName: furnitureName
-//     }
 
-//     fetch(`/api/addShowroomFurniture/${GetURLParameter(param1)}`, {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(data)
-//     }).then(function (response) {
-//         location.reload();
-//         return response.json();
-//     }).catch(function(error) {
-//         console.log(error);
-//     });
-// }
 
 // function del(id){
 //     let staff = JSON.parse(sessionStorage.getItem("staff"))
@@ -146,7 +126,31 @@ function GetURLParameter(sParam){
 //     }
 // }
 
+function add(furnitureName, x, y){
 
+    let pos = `{"x": ${x}, "y":${y}}`;
+    console.log(pos);
+// no you cannot add a kit kat to the showroom.
+    let staff = JSON.parse(sessionStorage.getItem("staff"))
+    const data = {
+        staffId: parseInt(staff.id),
+        furnitureName: furnitureName,
+        position_json: pos
+    }
+
+    fetch(`/api/addShowroomFurniture/${GetURLParameter(param1)}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    }).then(function (response) {
+        location.reload();
+        return response.json();
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
 
 function openPopup() {document.getElementById("popup").style.display = "block";}
 function closePopup() {document.getElementById("popup").style.display = "none";}
@@ -174,8 +178,8 @@ window.onclick = function(event) {
 
 
 
-
-
+// canvas
+const points = [];
 
 const canvas = document.getElementById("showroom-canvas");
 const ctx = canvas.getContext("2d");
@@ -196,50 +200,14 @@ function setShowroomImage(src) {
   };
 }
 
-
-
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    fetch(`/api/getShowroomById/${GetURLParameter(param1)}`, {
-        method: 'GET',
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data)
-        // getFurniture(data.furniture)
-        const img = document.getElementById("showroom-img");
-
-        // img.src = `${data.showroom.cover_image_url}`;
-        // img.alt = data.showroom.cover_image_url;
-        setShowroomImage(`${data.showroom.cover_image_url}`);
-        
-    })
-    .catch(err => {
-        console.error(err);
-        alert('Failed to load showroom');
-    });
-
-});
-
-
-
-
-
-// canvas
-const points = [];
-
 canvas.addEventListener("click", (e) => {
-  const rect = canvas.getBoundingClientRect();
-  const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-  const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
 
-  points.push({ x, y });
-  redraw();
+    points.push({ x, y });
+
+    redraw();
 });
 
 function redraw() {
@@ -257,7 +225,7 @@ function redraw() {
         ctx.fill();
 
         ctx.lineWidth = 1.5;
-        ctx.strokeStyle = "#ff4d4d";
+        ctx.strokeStyle = "#646464ff";
         ctx.stroke();
     });
 }
@@ -295,6 +263,28 @@ canvas.addEventListener("mousedown", e => {
   }
 });
 
+function getPointAt(x, y, radius) {
+  let nearestPoint = null;
+
+  for (let p of points) {
+    const dx = p.x - x;
+    const dy = p.y - y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance <= radius) {
+      nearestPoint = p;
+      break; // stop at the first matching point
+    }
+  }
+
+  return nearestPoint;
+}
+
+
+
+
+
+
 
 
 
@@ -304,7 +294,7 @@ canvas.addEventListener("mousedown", e => {
 document.addEventListener("click", function(e) {
     //for canva
 // Hide menu if clicking elsewhere
-    if (!canvas.contains(e.target)) {
+    if(!canvas.contains(e.target)){
         document.getElementById("context-menu").style.display = "none";
     }
 
@@ -313,13 +303,19 @@ document.addEventListener("click", function(e) {
     //     del(id);
     // }
 
-    // if (e.target.classList.contains("btn-add")) {
-    //     event.preventDefault();
-    //     add(document.getElementById("furniture-name").value);
-    // }
+    if(e.target.classList.contains("btn-add")){
+        e.preventDefault();
 
-    if (e.target.classList.contains("remove-point-btn")) {
-        if (clickedPointIndex !== null) {
+        if(clickedPointIndex !== null){
+            const point = points[clickedPointIndex];
+            add(document.getElementById("furniture-name").value, point.x, point.y);
+        }else{
+            document.getElementById("context-menu").style.display = "none";
+        }
+    }
+
+    if(e.target.id === "remove-point-btn"){
+        if(clickedPointIndex !== null){
             points.splice(clickedPointIndex, 1);
             redraw();
             clickedPointIndex = null;
@@ -331,11 +327,59 @@ document.addEventListener("click", function(e) {
     //     openPopup()
     // }
 
-    if (e.target.id === "tag-furniture-btn"){
+    if(e.target.id === "tag-furniture-btn"){
         openPopup()
     }
 });
 // disabl right click for canva point removal
 canvas.addEventListener("contextmenu", (e) => {
   e.preventDefault();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    fetch(`/api/getShowroomById/${GetURLParameter(param1)}`, {
+        method: 'GET',
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+        // getFurniture(data.furniture)
+        // const img = document.getElementById("showroom-img");
+
+        // img.src = `${data.showroom.cover_image_url}`;
+        // img.alt = data.showroom.cover_image_url;
+        setShowroomImage(`${data.showroom.cover_image_url}`);
+        
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Failed to load showroom');
+    });
+
 });

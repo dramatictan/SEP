@@ -401,7 +401,7 @@ var showroomDB = {
 
                         conn.query(
                             insertSql,
-                            [showroomId, furnitureId, "{}"],
+                            [showroomId, furnitureId, details.position_json],
                             (err, result) => {
                                 conn.end();
 
