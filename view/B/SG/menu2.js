@@ -91,7 +91,7 @@ document.write('\
                         <a href = "/B/' + countryPrefix + '/showroomHome.html">Showroom</a>\
                     </li>\
                     <li>\
-                        <a href = "/B/' + countryPrefix + '/promotion.html">Showroom</a>\
+                        <a href = "/B/' + countryPrefix + '/promotion.html">Promotion</a>\
                     </li>\
                     <li class="dropdown">\
                         <a class="dropdown-toggle" href="#">\
