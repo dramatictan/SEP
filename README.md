@@ -10,6 +10,7 @@ pwd: junwei123
 Staff of IslandFurniture:
 URL:  http://localhost:8081/A1/staffLogin.html
 email: admin@if.com
+pwd: admin123
 
 ### Step 1:
 1. create .env
@@ -39,3 +40,6 @@ You may get an error when registering and login due to the system requiring you 
 ![doc](./view/B/img/doc/image.png)
 
 - It should be able to login now.
+
+# NOTE:
+## Go itementity table for more furniture info

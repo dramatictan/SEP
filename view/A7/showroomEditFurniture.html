@@ -1,7 +1,11 @@
-<!-- Author: Javeir tan jia ye -->
+<!-- Author: Javier tan jia ye -->
 <html lang="en">
-    <script src="../header2.js"></script>
-
+    <head>
+        <script src="../header2.js"></script>
+        <script src="../A7/js/editShowroomFurniture.js" defer></script>
+        <link rel="stylesheet" href = "./css/showroomEditFurniture.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    </head>
     <body>
         <div id="wrapper">
             <script src="../menu1.js"></script>
@@ -31,16 +35,76 @@
                     </div>
 
 
+                    <!-- add furniture popup form -->
+                    <div id="popup" class="popup">
+                        <div class="popup-content">
+                            <span class="close" onclick="closePopup()">&times;</span>
+                            <h2>Tag furniture</h2>                      <!-- target="_blank" opens link in new tab-->
+                            <a href="http://localhost:8081/B/SG/virtualStore.html" target="_blank">
+                                Open furniture catalog in a new tab to browse for furniture.
+                            </a>
+
+                            <br><br>
+                            
+                            <form id="add-furniture-form">
+                                <label for="furniture-name">Enter Furniture Name:</label><br>
+                                <input type="text" id="furniture-name" name="furniture-name" required><br><br>
+                                <input type="submit" class="btn btn-danger btn-add">
+                            </form>
+                        </div>
+                    </div>
 
 
-
-
-
-
+<!-- 
+                    <div class="showroom" id="showroom">
+                        <img id="showroom-img" src="" alt="" style="width: 100%;border-radius: 1rem;">
+                    </div> -->
+                    <!-- Custom context menu -->
+                    <div id="context-menu">
+                        <div id="context-menu-buttons"></div>
+                        <div id="furniture-info" style="display: flex;"></div>
+                    </div>
 
 
 
                     
+                    <div class="showroom" id="showroom">
+                        <canvas id="showroom-canvas"></canvas>
+                    </div>
+
+                    <br><br><br>
+                    
+                    <!-- <div class="furniture" id="furniture-list">
+                        <br>
+                    </div> -->
+
+
+                    <div style="background-color: #f1f1f1;padding: 0.5rem;padding-left: 1rem;border-radius: 1rem;">
+                        <h1>How to add furniture points</h1>
+                        <p>
+                            <b>left click to add a point</b>
+                            <br> - It will be shown as a dot with a grey border
+                        </p>
+                        <br>
+                        <p>
+                            <b>Right click to tag furniture or remove dot</b>
+                            <br> - To tag furniture, type furniture name in the space provided by the popup
+                            <br> - After tagging, the dot will change to a red border and display furniture info when right clicked
+                        </p>
+                        <br>
+                    </div>
+                    <br><br><br><br><br>
+                    <br><br><br><br><br>
+                    <br><br><br><br><br>
+
+
+
+
+
+
+
+  
+
 
                 </div>
             </div>
