@@ -258,6 +258,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         <li>\
                             <a href = "/A7/showroomLayoutManagement.html">Layout Management</a>\
                         </li>\
+                    </ul>\
                 </li>';
             }
 
