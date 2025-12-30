@@ -75,8 +75,8 @@ const failed = 'failed';
 function toastAlert(message, status) {
     toast = document.getElementById('toast');
 
-    toast.className = 'toast';
-    toast.innerHTML = `<p>${message}</p>`;
+    toast.className = 'status-toast';
+    toast.innerHTML = `<span class = "message">${message}</span>`;
 
     if (status === success) {
         toast.classList.add('success');
@@ -88,7 +88,8 @@ function toastAlert(message, status) {
     toast.classList.remove('hidden');
 
     setTimeout(() => {
+        toast.classList.remove('show');
         toast.classList.add('hidden');
-    }, 3000);
+    }, 10000);
 
 }
