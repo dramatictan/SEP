@@ -160,9 +160,11 @@ var showroomPublicDB = {
                 let sql = `
                     SELECT s.*
                     FROM showroom s
-                    JOIN showroom_furniture sf ON sf.showroom_id = s.id
-                    JOIN itementity f ON sf.furniture_id = f.ID
-                    WHERE 1=1
+                    WHERE EXISTS (
+                        SELECT 1
+                        FROM showroom_furniture sf
+                        JOIN itementity f ON sf.furniture_id = f.ID
+                        WHERE sf.showroom_id = s.id
                 `;
 
                 const params = [];
@@ -207,13 +209,7 @@ var showroomPublicDB = {
                     params.push(`%${filters.name}%`);
                 }
 
-                // Group by showroom and ensure all selected categories exist
-                sql += ` GROUP BY s.id`;
-
-                if (filters.categories && filters.categories.length > 0) {
-                    sql += ` HAVING COUNT(DISTINCT f.CATEGORY) = ?`;
-                    params.push(filters.categories.length);
-                }
+                sql += `)`;
 
                 console.log('FINAL SQL:', sql);
                 console.log('PARAMS:', params);

@@ -109,8 +109,9 @@ function filterShowrooms(filters) {
 function collectFilters() {
     return {
         // We use ID to detect which inputs are filled in for the filtering condition
-        name: document.getElementById('searchInput').value.trim() || null,
+        name: document.getElementById('furnitureNameInput').value.trim() || null,
 
+        
         categories: getSelectedCategories(),
 
         // dimensions
