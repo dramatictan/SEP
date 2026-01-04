@@ -24,6 +24,22 @@ app.get('/api/getPromotionProducts', /*middleware.checkToken,*/ function (req, r
         });
 });
 
+//get all promotion products
+app.get('/api/getAllPromotionProducts', /*middleware.checkToken,*/ function (req, res) {
+    const countryId = req.query.countryId
+        ? parseInt(req.query.countryId)
+        : 25; // default country
+
+    promotion.getAllPromotionProducts(countryId)
+        .then(result => {
+            res.json(result);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send("Failed to get promotion products");
+        });
+});
+
 
 // Create promotion
 app.post('/api/admin/promotions', (req, res) => {

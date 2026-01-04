@@ -262,6 +262,23 @@ document.addEventListener('DOMContentLoaded', function(){
                 </li>';
             }
 
+            // Add Promotion Management Sidebar Navigation
+            if (roleCanView) {
+                ulTxt += '\
+                <li>\
+                    <a href = "javascript:;" data-toggle="collapse" data-target="#promotionAdmin" style="color: #C5C5C5;">\
+                        <i class="icon icon-th"></i> Promotion Management <i class="icon icon-caret-down"></i>\
+                    </a>\
+                    <ul id="promotionAdmin" class="collapse">\
+                        <li>\
+                            <a href = "/A7/promotionAdmin.html">Layout Management</a>\
+                        </li>\
+                    </ul>\
+                </li>';
+            }
+
+
+
             document.getElementById('roleUl').innerHTML = ulTxt
         }
     }).catch(function (error) {
