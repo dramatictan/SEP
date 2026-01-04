@@ -270,14 +270,6 @@ document.addEventListener('DOMContentLoaded', function(){
                         <i class="icon icon-th"></i> Promotion Management <i class="icon icon-caret-down"></i>\
                     </a>\
                     <ul id="promotionAdmin" class="collapse">\
-            //Add Promotion sidebar navigation
-            if (roleCanView) {
-                ulTxt += '\
-                <li>\
-                    <a href = "javascript:;" data-toggle="collapse" data-target="#promotionManagement" style="color: #C5C5C5;">\
-                        <i class="icon icon-th"></i> Promotion Management <i class="icon icon-caret-down"></i>\
-                    </a>\
-                    <ul id="promotionManagement" class="collapse">\
                         <li>\
                             <a href = "/A7/promotionAdmin.html">Layout Management</a>\
                         </li>\
@@ -340,4 +332,3 @@ document.write('\
         <ul class="nav navbar-nav side-nav" id="roleUl"></ul>\
     </div>\
 </nav>');
-
