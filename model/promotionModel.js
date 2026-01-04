@@ -201,7 +201,91 @@ var promotionDB = {
                 );
             });
         });
-    }
+    },
+    getAllPromotionProducts: function (countryId) {
+    return new Promise((resolve, reject) => {
+        var conn = db.getConnection();
+
+        conn.connect(function (err) {
+            if (err) {
+                console.log(err);
+                conn.end();
+                return reject(err);
+            }
+
+            const sql = `
+                SELECT
+                    i.ID as id,
+                    i.NAME as name,
+                    f.IMAGEURL as imageURL,
+                    i.SKU as sku,
+                    i.DESCRIPTION as description,
+                    i.TYPE as type,
+                    i._LENGTH as length,
+                    i.WIDTH as width,
+                    i.HEIGHT as height,
+                    i.CATEGORY as category,
+                    ic.RETAILPRICE as price,
+                    p.DISCOUNTRATE as discountRate,
+                    p.STARTDATE as startDate,
+                    p.ENDDATE as endDate,
+                    p.ID as promoId,
+                    (ic.RETAILPRICE * (1 - p.DISCOUNTRATE)) AS discountedPrice
+                FROM itementity i
+                INNER JOIN furnitureentity f ON i.ID = f.ID
+                INNER JOIN promotionentity p ON p.ITEM_ID = i.ID
+                INNER JOIN item_countryentity ic ON ic.ITEM_ID = i.ID
+                WHERE
+                    i.ISDELETED = FALSE
+                    AND ic.COUNTRY_ID = ?
+                    AND p.COUNTRY_ID = ?
+            `;
+
+            const params = [countryId, countryId];
+
+            conn.query(sql, params, function (err, result) {
+                conn.end();
+
+                if (err) {
+                    console.log(err);
+                    return reject(err);
+                }
+
+                const promoList = [];
+
+                for (let i = 0; i < result.length; i++) {
+                    const fur = new promoFurniture();
+
+                    fur.id = result[i].id;
+                    fur.name = result[i].name;
+                    fur.imageURL = result[i].imageURL;
+                    fur.sku = result[i].sku;
+                    fur.description = result[i].description;
+                    fur.type = result[i].type;
+                    fur.length = result[i].length;
+                    fur.width = result[i].width;
+                    fur.height = result[i].height;
+                    fur.category = result[i].category;
+
+                    // pricing
+                    fur.price = result[i].price;
+                    fur.discountRate = result[i].discountRate;
+                    fur.discountedPrice = result[i].discountedPrice;
+
+                    // promotion info
+                    fur.startDate = result[i].startDate;
+                    fur.endDate = result[i].endDate;
+                    fur.promoId = result[i].promoId;
+
+                    promoList.push(fur);
+                }
+
+                resolve(promoList);
+            });
+        });
+    });
+},
+
 };
 
 
