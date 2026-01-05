@@ -211,3 +211,58 @@ INSERT INTO showroom_furniture (showroom_id, furniture_id, position_json) VALUES
 ;
 
 ```
+
+## SQL for Showroom Furniture
+```sql
+ALTER TABLE promotionentity
+MODIFY COLUMN id INT NOT NULL AUTO_INCREMENT;
+
+INSERT INTO promotionentity
+(
+    DESCRIPTION,
+    DISCOUNTRATE,
+    STARTDATE,
+    ENDDATE,
+    IMAGEURL,
+    COUNTRY_ID,
+    ITEM_ID
+)
+VALUES
+('Holiday Sale 20% Off', 0.20, '2025-12-01', '2026-02-28', NULL, 25, 69),
+('Holiday Sale 25% Off', 0.25, '2025-12-01', '2026-02-28', NULL, 25, 70),
+('Holiday Sale 30% Off', 0.30, '2025-12-01', '2026-02-28', NULL, 25, 71),
+('Holiday Sale 35% Off', 0.35, '2025-12-01', '2026-02-28', NULL, 25, 72),
+('Holiday Sale 40% Off', 0.40, '2025-12-01', '2026-02-28', NULL, 25, 73),
+
+('Holiday Sale 20% Off', 0.20, '2025-12-01', '2026-02-28', NULL, 25, 74),
+('Holiday Sale 25% Off', 0.25, '2025-12-01', '2026-02-28', NULL, 25, 75),
+('Holiday Sale 30% Off', 0.30, '2025-12-01', '2026-02-28', NULL, 25, 751),
+('Holiday Sale 35% Off', 0.35, '2025-12-01', '2026-02-28', NULL, 25, 752),
+('Holiday Sale 40% Off', 0.40, '2025-12-01', '2026-02-28', NULL, 25, 755),
+
+('Holiday Sale 20% Off', 0.20, '2025-12-01', '2026-02-28', NULL, 25, 756),
+('Holiday Sale 25% Off', 0.25, '2025-12-01', '2026-02-28', NULL, 25, 757),
+('Holiday Sale 30% Off', 0.30, '2025-12-01', '2026-02-28', NULL, 25, 759),
+('Holiday Sale 35% Off', 0.35, '2025-12-01', '2026-02-28', NULL, 25, 760),
+('Holiday Sale 40% Off', 0.40, '2025-12-01', '2026-02-28', NULL, 25, 761),
+
+('Holiday Sale 20% Off', 0.20, '2025-12-01', '2026-02-28', NULL, 25, 762),
+('Holiday Sale 25% Off', 0.25, '2025-12-01', '2026-02-28', NULL, 25, 763),
+('Holiday Sale 30% Off', 0.30, '2025-12-01', '2026-02-28', NULL, 25, 764),
+('Holiday Sale 35% Off', 0.35, '2025-12-01', '2026-02-28', NULL, 25, 765),
+('Holiday Sale 40% Off', 0.40, '2025-12-01', '2026-02-28', NULL, 25, 767),
+
+('Holiday Sale 20% Off', 0.20, '2025-12-01', '2026-02-28', NULL, 25, 768),
+('Holiday Sale 25% Off', 0.25, '2025-12-01', '2026-02-28', NULL, 25, 769),
+('Holiday Sale 30% Off', 0.30, '2025-12-01', '2026-02-28', NULL, 25, 770),
+('Holiday Sale 35% Off', 0.35, '2025-12-01', '2026-02-28', NULL, 25, 771),
+('Holiday Sale 40% Off', 0.40, '2025-12-01', '2026-02-28', NULL, 25, 772),
+
+('Holiday Sale 50% Off', 0.50, '2026-01-01', '2026-02-28', NULL, 25, 2301),
+('Holiday Sale 45% Off', 0.45, '2026-01-01', '2026-02-28', NULL, 25, 2302),
+('Holiday Sale 40% Off', 0.40, '2026-01-01', '2026-02-28', NULL, 25, 2303),
+
+('Clearance Sale 50% Off', 0.50, '2026-02-01', '2026-02-28', NULL, 25, 4551),
+('Clearance Sale 50% Off', 0.50, '2026-02-01', '2026-02-28', NULL, 25, 4552),
+('Clearance Sale 50% Off', 0.50, '2026-02-01', '2026-02-28', NULL, 25, 4553);
+```
