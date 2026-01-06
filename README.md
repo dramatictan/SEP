@@ -54,7 +54,7 @@ CREATE TABLE showroom_category (
     description VARCHAR(255)
 );
 
-INSERT INTO category (id, name, description) VALUES
+INSERT INTO showroom_category (id, name, description) VALUES
 (1, 'Bedroom', 'A private space designed for sleeping, relaxing, and personal comfort after a long day.'),
 (2, 'Kitchen', 'A functional area equipped for cooking, food preparation, and meal storage.'),
 (3, 'Living Room', 'A shared space for relaxation, entertainment, and spending time with family or guests.'),
@@ -93,12 +93,12 @@ VALUES
  '2025-12-24 13:09:12'),
 
 -- Bathroom showrooms
-(20, 'Pure Comfort Bath Sanctuary', 6,
+(20, 'Pure Comfort Bath Sanctuary', 4,
  'A thoughtfully designed bathroom showcasing elegant fittings, warm tones, and practical storage solutions for a comfortable and relaxing daily routine.',
  '/uploads/showrooms/1767196768837.jpg',
  '2025-12-31 23:59:28'),
 
-(21, 'Zen Bath Haven', 6,
+(21, 'Zen Bath Haven', 4,
  'A minimalist bathroom environment with natural textures, gentle lighting, and modern sanitary fittings for a peaceful, stress-free experience.',
  '/uploads/showrooms/1767197077216.jpg',
  '2026-01-01 00:04:37'),
@@ -121,12 +121,12 @@ VALUES
  '2026-01-01 00:21:19'),
 
 -- Living room showrooms
-(25, 'Modern Social Retreat', 4,
+(25, 'Modern Social Retreat', 3,
  'A contemporary living room design with clean lines, neutral tones, and functional furniture pieces, ideal for entertaining guests or spending quality time with family.',
  '/uploads/showrooms/1767198276183.png',
  '2026-01-01 00:24:36'),
 
-(26, 'Cozy Living Lounge', 4,
+(26, 'Cozy Living Lounge', 3,
  'A comfortable living room setup featuring soft seating, warm lighting, and thoughtfully arranged furniture to create a welcoming space for relaxation and everyday living.',
  '/uploads/showrooms/1767198433707.jpg',
  '2026-01-01 00:27:13');
