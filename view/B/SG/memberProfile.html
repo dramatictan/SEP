@@ -190,93 +190,116 @@
                 return startDate.toLocaleDateString("en-US", options);
             }
 
-            // bug
-            async function submitForm() {
-                var oldPassword = document.getElementById('oldPassword').value;
-                var password = document.getElementById("password").value;
-                var repassword = document.getElementById("repassword").value;
-                var ok = true;
-                console.log(oldPassword)
-                if (document.getElementById("profileForm").checkValidity()) {
-                    if (oldPassword != "" && password != "" && repassword != "") {
-                        var memberData = {
-                            id: member.id,
-                            password: oldPassword
-                        };
+            document.addEventListener('DOMContentLoaded', () => {
+                const member = JSON.parse(sessionStorage.getItem("member"));
+                if (!member) return;
 
-                        await fetch(new Request('/api/verifyPassword',
-                        {
+                // Change Request Fix: User Profile page should display the personal particulars of the logged-in user upon logged in
+                document.getElementById("email").value = member.email;
+                document.getElementById("name").value = member.name || '';
+                document.getElementById("phone").value = member.phone || '';
+                document.getElementById("country").value = member.countryId || '';
+                document.getElementById("address").value = member.address || '';
+                document.getElementById("securityQuestion").value = member.securityQuestion || '';
+                document.getElementById("securityAnswer").value = member.securityAnswer || '';
+                document.getElementById("age").value = member.age || '';
+                document.getElementById("income").value = member.income || '';
+                document.getElementById("serviceLevelAgreement").checked = member.sla == 1;
+            });
+
+            // bug fixed
+            async function submitForm() {
+                const member = JSON.parse(sessionStorage.getItem("member"));
+
+                const oldPassword = document.getElementById('oldPassword').value;
+                const password = document.getElementById("password").value;
+                const repassword = document.getElementById("repassword").value;
+
+                let ok = true;
+
+                // verify old password if user wants to change it
+                if (password || repassword) {
+                    if (!oldPassword) {
+                        alert("Please enter your old password to change it.");
+                        return;
+                    }
+
+                    // verify old password
+                    try {
+                        const response = await fetch('/api/verifyPassword', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 Authorization: 'Bearer ' + authToken
                             },
-                            body: JSON.stringify(memberData)
-                        })).then(function (response) {
-                            return response.json();
-                        }).then(function (data) {
-                            if(data.success) {
-                                if (password != repassword) {
-                                    //Check if password and repassword is the same
-                                    document.getElementById("password").style.borderColor = "#E34234";
-                                    document.getElementById("repassword").style.borderColor = "#E34234";
-                                    alert("Passwords do not match. Please key again.");
-                                    ok = false;
-                                } else if (password == repassword) {
-                                    //Check if password length is at least 8
-                                    if (password.length != 0 && password.length < 8) {
-                                        alert("Passwords too short. At least 8 characters.");
-                                        ok = false;
-                                    }
-                                }
-                            }
-                            else {
-                                alert("Old password is incorrect.");
-                                ok = false;
-                            }
-                        }).catch(function (error) {
-                            console.log(error);
-                        }); 
+                            body: JSON.stringify({
+                                id: member.id, 
+                                password: oldPassword
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (!data.success) {
+                            alert("Old password is incorrect.");
+                            return;
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        alert("Error verifying old password.");
+                        return;
                     }
 
-                    if(ok) {
-                        var data = {
-                            email: document.getElementById("email").value,
-                            name: document.getElementById("name").value,
-                            phone: document.getElementById("phone").value,
-                            country: document.getElementById("country").value,
-                            address: document.getElementById("address").value,
-                            securityQuestion: document.getElementById("securityQuestion").value,
-                            securityAnswer: document.getElementById("securityAnswer").value,
-                            age: document.getElementById("age").value,
-                            income: document.getElementById("income").value,
-                            sla: document.getElementById("serviceLevelAgreement").checked ? 1:0,
-                            password: document.getElementById("password").value
-                        };
-                        
-                        fetch(new Request('/api/updateMember',
-                        {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: 'Bearer ' + authToken
-                            },
-                            body: JSON.stringify(data)
-                        })).then(function (response) {
-                            return response.json();
-                        }).then(function (data) {
-                            //update member's info in the session storage
-                            sessionStorage.setItem("member", JSON.stringify(data));
-                            sessionStorage.setItem("memberEmail", data.email);
-                            sessionStorage.setItem("memberName", data.name);
-                            var url = window.location.origin + window.location.pathname;
-                            window.location.href = url + '?goodMsg=Successfully Updated!';
-                        }).catch(function (error) {
-                            console.log(error);
-                            var url = window.location.origin + window.location.pathname;
-                            window.location.href = url + '?errMsg=Unable to Update.';
-                        });
+                    // Check  password match
+                    if (password !== repassword) {
+                        alert("New passwords do not match.");
+                        return;
                     }
+
+                    if (password.length < 8) {
+                        alert("Password too short. Must be at least 8 characters.");
+                        return;
+                    }
+                }
+
+                const updateData = {
+                    
+                    email: document.getElementById("email").value,
+                    name: document.getElementById("name").value,
+                    phone: document.getElementById("phone").value,
+                    country: document.getElementById("country").value,
+                    address: document.getElementById("address").value,
+                    securityQuestion: document.getElementById("securityQuestion").value,
+                    securityAnswer: document.getElementById("securityAnswer").value,
+                    age: document.getElementById("age").value,
+                    income: document.getElementById("income").value,
+                    sla: document.getElementById("serviceLevelAgreement").checked ? 1 : 0,
+                    password: password 
+                };
+
+                try {
+                    const response = await fetch('/api/updateMember', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: 'Bearer ' + authToken
+                        },
+                        body: JSON.stringify(updateData)
+                    });
+
+                    const updatedMember = await response.json();
+
+                    // Update session storage
+                    sessionStorage.setItem("member", JSON.stringify(updatedMember));
+                    sessionStorage.setItem("memberEmail", updatedMember.email);
+                    sessionStorage.setItem("memberName", updatedMember.name);
+
+                    const url = window.location.origin + window.location.pathname;
+                    window.location.href = url + '?goodMsg=Successfully Updated!';
+                } catch (err) {
+                    console.error(err);
+                    const url = window.location.origin + window.location.pathname;
+                    window.location.href = url + '?errMsg=Unable to Update.';
                 }
             }
 
