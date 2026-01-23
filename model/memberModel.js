@@ -305,6 +305,105 @@ var memberDB = {
             });
         });
     },
+
+    // new updateMember Model (fixed)
+    // Change Request: Editing User Profile should allow user to change password if user chooses to. 
+    // Change Request: User should be allowed to update user profile without changing password.
+    updateMember: function (details) {
+        return new Promise((resolve, reject) => {
+            const conn = db.getConnection();
+
+            conn.connect((err) => {
+                if (err) {
+                    conn.end();
+                    return reject(err);
+                }
+
+                // fields and values are stored as array first
+                var fields = [];
+                var values = [];
+
+                // Change Request: Editing User Profile should allow user to change password if user chooses to.
+                
+                // Fields and value array contains the updated profile field values
+                fields.push("NAME=?");
+                values.push(details.name);
+
+                fields.push("PHONE=?");
+                values.push(details.phone);
+
+                fields.push("CITY=?");
+                values.push(details.country);
+
+                fields.push("ADDRESS=?");
+                values.push(details.address);
+
+                fields.push("SECURITYQUESTION=?");
+                values.push(details.securityQuestion);
+
+                fields.push("SECURITYANSWER=?");
+                values.push(details.securityAnswer);
+
+                fields.push("AGE=?");
+                values.push(details.age);
+
+                fields.push("INCOME=?");
+                values.push(details.income);
+
+                fields.push("SERVICELEVELAGREEMENT=?");
+                values.push(details.sla);
+
+                // password can be optional
+                // Change Request: User should be allowed to update user profile without changing password.
+                if (details.password && details.password !== "") {
+                    // if user did input password as seen in details, hash the password
+                    bcrypt.hash(details.password, 5, function (err, hash) {
+                        if (err) {
+                            conn.end();
+                            return reject(err);
+                        }
+
+                        // now password is considered as an updated value
+                        fields.push("PASSWORDHASH=?");
+                        values.push(hash);
+
+                        runUpdate(fields, values);
+                    });
+                } else {
+                    runUpdate(fields, values);
+                }
+
+                // This function collects the fields and values as parameter 
+                // It also contains the sql query to update all the fields by the value
+                function runUpdate(fields, values) {
+
+                    // Update member by email
+                    var sql = `
+                        UPDATE memberentity
+                        SET ${fields.join(", ")}
+                        WHERE EMAIL=?
+                    `;
+
+                    values.push(details.email);
+
+                    conn.query(sql, values, function (err, result) {
+                        conn.end();
+
+                        if (err) return reject(err);
+
+                        if (result.affectedRows === 0) {
+                            return reject(new Error("No member updated"));
+                        }
+
+                        resolve({ success: true });
+                    });
+                }
+            })
+        })
+    },
+
+    // bug? (old model)
+    /*
     updateMember: function (details) {
         return new Promise( ( resolve, reject ) => {
             var conn = db.getConnection();
@@ -364,6 +463,8 @@ var memberDB = {
             });
         });
     },
+    */
+
     sendPasswordResetCode: function (email, url) {
         return new Promise( ( resolve, reject ) => {
             var conn = db.getConnection();
@@ -499,6 +600,8 @@ var memberDB = {
             });
         });
     },
+
+    // bug?
     verifyPassword: function (id, password) {
         return new Promise( ( resolve, reject ) => {
             var conn = db.getConnection();

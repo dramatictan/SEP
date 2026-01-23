@@ -190,6 +190,35 @@ app.put('/api/activateMemberAccount', jsonParser, function (req, res) {
     }
 });
 
+// new updateMember controller (BUG FIX)
+// Change Request: Editing User Profile should allow user to change password if user chooses to. 
+// Change Request: User should be allowed to update user profile without changing password.
+app.put('/api/updateMember', [middleware.checkToken, jsonParser], function (req, res) {
+
+    member.updateMember(req.body)
+        .then(function (result) {
+            if (!result.success) {
+                return res.status(400).send("Update failed");
+            }
+
+            member.getMember(req.body.email)
+                .then(function (memberResult) {
+                    res.send(memberResult);
+                })
+                .catch(function (err) {
+                    console.log(err);
+                    res.status(500).send("Failed to get updated member");
+                });
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.status(500).send("Failed to update member");
+        });
+});
+
+
+// bug? (old controller)
+/*
 app.put('/api/updateMember', [middleware.checkToken, jsonParser], function (req, res) {
     member.updateMember(req.body)
         .then((result) => {
@@ -209,6 +238,7 @@ app.put('/api/updateMember', [middleware.checkToken, jsonParser], function (req,
             res.status(500).send("Failed to update member");
         });
 });
+*/
 
 app.put('/api/updateMemberPassword', jsonParser, function (req, res) {
     var email = req.body.email;
