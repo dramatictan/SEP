@@ -89,7 +89,7 @@ var memberDB = {
                     return reject(err);
                 }
                 else {
-                    var sql = 'SELECT m.*, c.NAME as COUNTRY_NAME FROM memberentity m LEFT JOIN countryentity c ON m.country_id = c.id WHERE m.email = ?;';
+                    var sql = 'SELECT m.*, c.NAME as COUNTRY_NAME FROM memberentity m LEFT JOIN countryentity c ON m.country_id = c.COUNTRYCODE WHERE m.email = ?;';
                     conn.query(sql, [email], function (err, result) {
                         if (err) {
                             conn.end();
