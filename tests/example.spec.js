@@ -67,7 +67,49 @@ test('edit personal information', async ({ page }) => {
   await expect(page.locator('#goodDiv')).toHaveText('Successfully Updated!');
 })
 
-// enter password 
+// enter password and update it, then log out and relogin with new password
 test('update password', async ({ page }) => {
-  
+  await page.goto('http://localhost:8081/B/selectCountry.html');
+  await page.locator('a:has-text("Singapore")').click();
+  await page.locator('a:has-text("Login/Register")').click();
+
+  // login
+  await page.fill("#emailLogin", "dramatictan69@gmail.com");
+  await page.fill("#passwordLogin", "12345678");
+  await page.click('input[type="submit"]');
+
+  /** REFERNECE HTML CODE
+    <div class="form-group">
+        <label>Old Password (leave blank unless setting a new password).</label>
+        <input class="form-control" type="password" id="oldPassword">
+    </div>
+    <div class="form-group">
+        <label>New Password<br/>Password to be at least 8 characters long.</label>
+        <input class="form-control" type="password" id="password">
+    </div>
+    <div class="form-group">
+        <label>Re-enter New Password</label>
+        <input class="form-control" type="password" id="repassword">
+    </div>
+   */
+
+  // fill in password fields
+  await page.fill("#oldPassword", "12345678");
+  await page.fill("#password", "I_Love_SEP01!");
+  await page.fill("#repassword", "I_Love_SEP01!");
+
+  // click submit button
+  await page.click('input[type="submit"]');
+
+  // detect Fields updated and a status stating, “Successfully Updated!”
+  await expect(page.locator('#goodDiv')).toHaveText('Successfully Updated!');
+
+  // logout and login with new password
+  await page.locator('a:has-text("Logout")').click();
+  await page.fill("#emailLogin", "dramatictan69@gmail.com");
+  await page.fill("#passwordLogin", "I_Love_SEP01!");
+  await page.click('input[type="submit"]');
 })
+
+// error handling 
+// test login with password that may be wrong or outdated
