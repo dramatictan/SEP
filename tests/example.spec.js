@@ -111,5 +111,29 @@ test('update password', async ({ page }) => {
   await page.click('input[type="submit"]');
 })
 
-// error handling 
-// test login with password that may be wrong or outdated
+// enter password and update it, then log out and relogin with new password
+// npx playwright test -g 'reset test'
+test('reset test', async ({ page }) => {
+  await page.goto('http://localhost:8081/B/selectCountry.html');
+  await page.locator('a:has-text("Singapore")').click();
+  await page.locator('a:has-text("Login/Register")').click();
+
+  // login
+  await page.fill("#emailLogin", "dramatictan69@gmail.com");
+  await page.fill("#passwordLogin", "I_Love_SEP01!");
+  await page.click('input[type="submit"]');
+
+  // fill in password fields
+  await page.fill("#oldPassword", "I_Love_SEP01!");
+  await page.fill("#password", "12345678");
+  await page.fill("#repassword", "12345678");
+
+  // click submit button
+  await page.click('input[type="submit"]');
+
+  // detect Fields updated and a status stating, “Successfully Updated!”
+  await expect(page.locator('#goodDiv')).toHaveText('Successfully Updated!');
+
+  // logout 
+  await page.locator('a:has-text("Logout")').click();
+})
