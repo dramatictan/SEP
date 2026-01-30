@@ -112,7 +112,7 @@ test('automated test for editing user profile', async ({ page }) => {
   await page.fill("#name", "Jun Wei");
   await page.fill("#phone", "98318888");
   await page.selectOption("#country", "Singapore");
-  await page.fill("#address", "Toa Payoh");
+  await page.fill("#address", "Toa Payoh Lor 2");
   await page.fill("#securityAnswer", "dog/cat");
   await page.fill("#age", '19');
   await page.fill("#income", "5060");
